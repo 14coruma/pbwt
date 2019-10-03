@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 # Algorithm 2 (BuildPrefixAndDivergenceArrays)
 
 def BuildPrefixAndDivergenceArrays(X, k, pre, div):

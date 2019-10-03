@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 # Algorithm 3 (ReportLongMatches)
 import alg_2
 
@@ -10,12 +10,12 @@ def ReportLongMatches(X, k, L, pre_arr, div_arr):
     a = [0] * len(X[0])
     b = [0] * len(X[0])
 
-    for i in range(0,M):
+    for i in range(M):
         if div_arr[k][i] > k - L:
             if u > 0 and v > 0:
-                u = 0
-                v = 0
-                yield k, a, b
+                yield k, a[0:u], b[0:v]
+            u = 0
+            v = 0
         if X[pre_arr[k][i]][k] == 0:
             a[u] = pre_arr[k][i] # Same as a[u] = pre[i]
             u = u + 1
@@ -23,7 +23,7 @@ def ReportLongMatches(X, k, L, pre_arr, div_arr):
             b[v] = pre_arr[k][i] # Same as b[v] = pre[i]
             v = v + 1
     if u > 0 and v > 0:
-        yield k, a, b
+        yield k, a[0:u], b[0:v]
 
 def main():
     X = [[0, 1, 0, 1, 0, 1],
@@ -42,7 +42,9 @@ def main():
     div_arr = []
     pre = range(0,M)
     div = [0] * M 
-    for k in range(0,N):
+    pre_arr.append(pre)
+    div_arr.append(div)
+    for k in range(0,N-1):
         pre,div = alg_2.BuildPrefixAndDivergenceArrays(X,k,pre,div)
         pre_arr.append(pre)
         div_arr.append(div)
@@ -52,6 +54,10 @@ def main():
         print('Matches k={0}, L={1}:'.format(k, L))
         for match in matches:
             print(match)
+    for i in range(len(X)):
+        for j in range(len(X[0])):
+            print(X[i][j], end=' ')
+        print()
 
 if __name__ == "__main__":
     main()
