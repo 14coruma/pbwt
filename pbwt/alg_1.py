@@ -17,18 +17,22 @@ def BuildPrefixArray(X,k, pref):
             v = v + 1
     return a + b
 
-X = [[0, 1, 0, 1, 0, 1],
-     [1, 1, 0, 0, 0, 1],
-     [1, 1, 1, 1, 1, 1],
-     [0, 1, 1, 1, 1, 0],
-     [0, 0, 0, 0, 0, 0],
-     [1, 0, 0, 0, 1, 0],
-     [1, 1, 0, 0, 0, 1],
-     [0, 1, 0, 1, 1, 0]]
-M=len(X)
-N=len(X[0])
+def main():
+    X = [[0, 1, 0, 1, 0, 1],
+         [1, 1, 0, 0, 0, 1],
+         [1, 1, 1, 1, 1, 1],
+         [0, 1, 1, 1, 1, 0],
+         [0, 0, 0, 0, 0, 0],
+         [1, 0, 0, 0, 1, 0],
+         [1, 1, 0, 0, 0, 1],
+         [0, 1, 0, 1, 1, 0]]
+    M=len(X)
+    N=len(X[0])
 
-pref = range(0,M)
-for i in range(0,N-1):
-    pref = BuildPrefixArray(X,i,pref)
-print(pref)
+    pref = range(0,M)
+    for i in range(0,N-1):
+        pref = BuildPrefixArray(X,i,pref)
+    print(pref)
+
+if __name__ == "__main__":
+    main()

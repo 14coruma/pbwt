@@ -46,22 +46,25 @@ def DisplayPrefixAndDivergenceArrays(X,k,pre,div):
         text += '\n'
     print(text)
 
+def main():
+    X = [[0, 1, 0, 1, 0, 1],
+         [1, 1, 0, 0, 0, 1],
+         [1, 1, 1, 1, 1, 1],
+         [0, 1, 1, 1, 1, 0],
+         [0, 0, 0, 0, 0, 0],
+         [1, 0, 0, 0, 1, 0],
+         [1, 1, 0, 0, 0, 1],
+         [0, 1, 0, 1, 1, 0]]
+    M=len(X)
+    N=len(X[0])
 
-X = [[0, 1, 0, 1, 0, 1],
-     [1, 1, 0, 0, 0, 1],
-     [1, 1, 1, 1, 1, 1],
-     [0, 1, 1, 1, 1, 0],
-     [0, 0, 0, 0, 0, 0],
-     [1, 0, 0, 0, 1, 0],
-     [1, 1, 0, 0, 0, 1],
-     [0, 1, 0, 1, 1, 0]]
-M=len(X)
-N=len(X[0])
+    pre = range(0,M)
+    div = [0] * M 
+    for k in range(0,N-1):
+        pre,div = BuildPrefixAndDivergenceArrays(X,k,pre,div)
+        DisplayPrefixAndDivergenceArrays(X,k,pre,div)
+    print(pre)
+    print(div)
 
-pre = range(0,M)
-div = [0] * M 
-for k in range(0,N-1):
-    pre,div = BuildPrefixAndDivergenceArrays(X,k,pre,div)
-    DisplayPrefixAndDivergenceArrays(X,k,pre,div)
-print(pre)
-print(div)
+if __name__ == "__main__":
+    main()
