@@ -29,6 +29,34 @@ def BuildPrefixAndDivergenceArrays(X, k, pre, div):
             q = 0
     return (a+b), (d+e)
 
+def PreDivArraysWithUV(X, k, pre, div):
+    M = len(X)
+    u = 0
+    v = 0
+    p = k+1
+    q = k+1
+    a = []
+    b = []
+    d = []
+    e = []
+
+    for i in range(0,M):
+        if div[i] > p:
+            p = div[i]
+        if div[i] > q:
+            q = div[i]
+        if X[pre[i]][k] == 0:
+            a.append(pre[i]) # Same as a[u] = pre[i]
+            d.append(p) # Same as d[u] = p
+            u = u + 1
+            p = 0
+        else:
+            b.append(pre[i]) # Same as b[v] = pre[i]
+            e.append(q) # Same as e[v] = q
+            v = v + 1
+            q = 0
+    return (a+b), (d+e), u, v
+
 def DisplayPrefixAndDivergenceArrays(X,k,pre,div):
     text = ''
     for index, match_start in zip(pre,div):

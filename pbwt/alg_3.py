@@ -44,11 +44,11 @@ def main():
     div = [0] * M 
     pre_arr.append(pre)
     div_arr.append(div)
-    for k in range(0,N-1):
+    for k in range(0,N):
         pre,div = alg_2.BuildPrefixAndDivergenceArrays(X,k,pre,div)
         pre_arr.append(pre)
         div_arr.append(div)
-    L = 3
+    L = 4
     for k in range(0,N):
         matches = ReportLongMatches(X, k, L, pre_arr, div_arr)
         print('Matches k={0}, L={1}:'.format(k, L))
