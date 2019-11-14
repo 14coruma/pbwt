@@ -61,7 +61,7 @@ void PBWT::KPrefAndDiv(bool** data, int k) {
         m_div[i][k] = d[i];
     }
     for (int i = 0; i < v; i++) {
-        m_pref[i][k] = b[i];
-        m_div[i][k] = e[i];
+        m_pref[u+i][k] = b[i];
+        m_div[u+i][k] = e[i];
     }
 }

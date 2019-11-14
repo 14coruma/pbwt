@@ -17,6 +17,8 @@ class PBWT {
 
         int getLength() { return m_length; }
         int getCount() { return m_count; }
+        int getPrefVal(int i, int j) { return m_pref[i][j]; }
+        int getDivVal(int i, int j) { return m_div[i][j]; }
 };
 
 #endif
