@@ -5,11 +5,15 @@ class PBWT {
     private:
         int m_length;
         int m_count;
+        int** m_pref;
+        int** m_div; 
+
+        void BuildPrefAndDiv(bool** data);
+        void KPrefAndDiv(bool** data, int k);
+        void InitPrefAndDiv();
 
     public:
         PBWT(int length, int count, bool** data);
-
-        void BuildPrefAndDivArrays(bool** data);
 
         int getLength() { return m_length; }
         int getCount() { return m_count; }
