@@ -5,9 +5,10 @@
 using namespace std;
 
 // PBWT Constructor
-PBWT::PBWT(int length, int count, bool** data) {
+PBWT::PBWT(int length, int count, bool** data, bool ext) {
     m_length = length;
     m_count = count;
+    m_ext = ext;
 
     BuildPrefAndDiv(data);
 }
@@ -22,14 +23,27 @@ void PBWT::BuildPrefAndDiv(bool** data) {
 }
 
 void PBWT::InitPrefAndDiv() {
-    m_pref = new int*[m_count+1];
-    m_div = new int*[m_count+1];
+    m_pref = new int*[m_count];
+    m_div = new int*[m_count];
+    if (m_ext) {
+        m_u_arr = new int*[m_count+1];
+        m_v_arr = new int*[m_count+1];
+        m_c = new int[m_length];
+    }
 
     for (int row = 0; row <= m_count; row++) {
-        m_pref[row] = new int[m_length];
+        m_pref[row] = new int[m_length+1];
         m_pref[row][0] = row;
-        m_div[row] = new int[m_length];
+        m_div[row] = new int[m_length+1];
         m_div[row][0] = 0;
+    }
+    if (m_ext) {
+        for (int row = 0; row <= m_count; row++) {
+            m_u_arr[row] = new int[m_length+1];
+            m_u_arr[row][0] = 0;
+            m_v_arr[row] = new int[m_length+1];
+            m_v_arr[row][0] = 0;
+        }
     }
 }
 
@@ -44,17 +58,26 @@ void PBWT::KPrefAndDiv(bool** data, int k) {
         if (m_div[i][k-1] > q) {
             q = m_div[i][k-1];
         }
+        if (m_ext) {
+            m_u_arr[i][k] = u;
+            m_v_arr[i][k] = v;
+        }
         if (data[m_pref[i][k-1]][k-1] == 0) {
             a.push_back(m_pref[i][k-1]);
-            u++;
             d.push_back(p);
             p = 0;
+            u++;
         } else {
             b.push_back(m_pref[i][k-1]);
             v++;
             e.push_back(q);
             q = 0;
         }
+    }
+    if (m_ext) {
+        m_c[k-1] = u;
+        m_u_arr[m_count][k] = u;
+        m_v_arr[m_count][k] = v;
     }
     for (int i = 0; i < u; i++) {
         m_pref[i][k] = a[i];
