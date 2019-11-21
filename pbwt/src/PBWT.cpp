@@ -18,7 +18,55 @@ void PBWT::BuildPrefAndDiv(bool** data) {
     
     // Iterate over columns, finding Pref and Div at each position
     for (int k = 1; k <= m_length; k++) {
-        PBWT::KPrefAndDiv(data, k);
+        KPrefAndDiv(data, k);
+    }
+}
+
+vector<vector<int> > PBWT::QueryMaximalMatches(bool* query, bool** data) {
+    int f = 0, g = 0, e = 0; 
+    vector<vector<int> > matches;
+    for (int k = 1; k < m_length; k++) {
+        KQueryMatches(query, k, data, matches, f, g, e);
+    }
+    return matches;
+}
+
+void PBWT::KQueryMatches(bool* query, int k, bool** data,
+        vector<vector<int> >& matches, int& f, int& g, int& e) {
+    int fp = IdxDest(f, query[k-1], k-1);
+    int gp = IdxDest(g, query[k-1], k-1);
+    int ep = e;
+    if (fp >= gp || k == m_length) {
+        for (int i = f; i < g; i++) {
+            vector<int> match;
+            match.push_back(m_pref[i][k-1]);
+            match.push_back(e);
+            match.push_back(k-1);
+            matches.push_back(match);
+        }
+        ep = m_div[fp][k] - 1;
+        if (query[ep] == 0 && fp > 0) {
+            fp = gp - 1;
+            while (ep > 0 && query[ep-1] == data[m_pref[fp][k]][ep-1])
+                ep--;
+            while (fp > 0 && m_div[fp][k] <= ep)
+                fp--;
+        } else {
+            gp = fp + 1;
+            while (ep > 0 && query[ep-1] == data[m_pref[fp][k]][ep-1])
+                ep--;
+            while (gp < m_count && m_div[gp][k] <= ep)
+                gp++;
+        }
+    }
+    f = fp; g = gp; e = ep;
+}
+
+int PBWT::IdxDest(int idx, bool val, int k) {
+    if (val == 0) {
+        return m_u_arr[idx][k];
+    } else {
+        return m_c[k] + m_v_arr[idx][k];
     }
 }
 
